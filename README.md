@@ -1,11 +1,11 @@
 
-# 🤖 AI-Based Website UX Feedback Tool
+# AI-Based Website UX Feedback Tool
 
 An AI-assisted web application that evaluates the User Experience (UX) quality of beginner websites by analyzing readability, CTA effectiveness, and color contrast accessibility.
 
 ---
 
-## 🚀 Project Overview
+##  Project Overview
 
 This tool allows users to input:
 
@@ -16,35 +16,35 @@ This tool allows users to input:
 
 The system analyzes these inputs and generates:
 
-- 📊 Readability Score
-- 🔥 CTA Effectiveness Score
-- 🎨 Color Contrast Score
-- 💡 UX Improvement Suggestions
-- ⭐ Overall UX Rating (0–100)
+-  Readability Score
+-  CTA Effectiveness Score
+-  Color Contrast Score
+-  UX Improvement Suggestions
+-  Overall UX Rating (0–100)
 
 This project combines Web Development + Applied NLP + UX principles.
 
 ---
 
-## 🧠 How It Works
+##  How It Works
 
-### 1️⃣ Readability Analysis
+### Readability Analysis
 - Uses Flesch Reading Ease formula (via `textstat`)
 - Checks sentence length and complexity
 - Suggests improvements if text is too hard or too simple
 
-### 2️⃣ CTA Effectiveness Analysis
+###  CTA Effectiveness Analysis
 - Detects action verbs (e.g., Buy, Start, Join, Download)
 - Identifies weak or generic CTAs
 - Scores based on action-oriented language strength
 
-### 3️⃣ Color Contrast Analysis
+###  Color Contrast Analysis
 - Converts HEX colors to RGB
 - Calculates brightness difference
 - Evaluates accessibility compliance
 - Suggests improvements for better readability
 
-### 4️⃣ Final UX Score
+###  Final UX Score
 Weighted combination of:
 - Readability
 - CTA strength
@@ -52,7 +52,7 @@ Weighted combination of:
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 ### Frontend
 - HTML
