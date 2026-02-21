@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>UX Insight Tool</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #f4f6f9;
+        }
+        header {
+            background: #4F46E5;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 20px;
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            flex: 1;
+            min-width: 300px;
+        }
+
+        textarea, input[type="text"], input[type="color"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #4F46E5;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #3730A3;
+        }
+
+        .score {
+            font-size: 20px;
+            margin: 10px 0;
+        }
+
+        .big-score {
+            font-size: 40px;
+            font-weight: bold;
+            color: #4F46E5;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>UX Insight Tool</h1>
+    <p>Smart UX Feedback in Seconds</p>
+</header>
+
+<div class="container">
+
+    <!-- INPUT SECTION -->
+    <div class="card">
+        <h2>Input</h2>
+
+        <label>Website Content</label>
+        <textarea id="content" rows="5" placeholder="Paste website text here..."></textarea>
+
+        <label>CTA Button Text</label>
+        <input type="text" id="cta" placeholder="Get Started Now">
+
+        <label>Primary Color</label>
+        <input type="color" id="primaryColor" value="#000000">
+
+        <label>Background Color</label>
+        <input type="color" id="bgColor" value="#ffffff">
+
+        <button onclick="analyzeUX()">Analyze UX</button>
+    </div>
+
+    <!-- RESULT SECTION -->
+    <div class="card">
+        <h2>Results</h2>
+
+        <div class="score">Readability Score: <span id="readScore">-</span></div>
+        <div class="score">CTA Effectiveness: <span id="ctaScore">-</span></div>
+        <div class="score">Color Contrast Score: <span id="colorScore">-</span></div>
+
+        <hr>
+
+        <div>Overall UX Rating</div>
+        <div class="big-score" id="overallScore">-</div>
+
+        <div id="suggestions"></div>
+    </div>
+
+</div>
+<script>
+function analyzeUX() {
+
+    let content = document.getElementById("content").value;
+    let cta = document.getElementById("cta").value;
+    let primary = document.getElementById("primaryColor").value;
+    let bg = document.getElementById("bgColor").value;
+
+    // 1️⃣ Readability Score (Simple logic)
+    let wordCount = content.split(" ").length;
+    let readability = 100 - (wordCount / 5);
+    readability = Math.max(10, Math.min(100, Math.floor(readability)));
+
+    // 2️⃣ CTA Effectiveness
+    let strongWords = ["now", "free", "today", "start", "get"];
+    let ctaScore = 50;
+    strongWords.forEach(word => {
+        if (cta.toLowerCase().includes(word)) {
+            ctaScore += 10;
+        }
+    });
+    ctaScore = Math.min(100, ctaScore);
+
+    // 3️⃣ Color Contrast (Very basic brightness difference)
+    function getBrightness(hex) {
+        let r = parseInt(hex.substr(1,2),16);
+        let g = parseInt(hex.substr(3,2),16);
+        let b = parseInt(hex.substr(5,2),16);
+        return (r*299 + g*587 + b*114) / 1000;
+    }
+
+    let brightnessDiff = Math.abs(getBrightness(primary) - getBrightness(bg));
+    let colorScore = Math.min(100, Math.floor(brightnessDiff));
+
+    // 4️⃣ Overall Score
+    let overall = Math.floor((readability + ctaScore + colorScore) / 3);
+
+    // Display results
+    document.getElementById("readScore").innerText = readability;
+    document.getElementById("ctaScore").innerText = ctaScore;
+    document.getElementById("colorScore").innerText = colorScore;
+    document.getElementById("overallScore").innerText = overall + "/100";
+
+    // Suggestions
+    let suggestionText = "<h3>Suggestions:</h3>";
+
+    if (readability < 60)
+        suggestionText += "<p>• Use shorter sentences for better readability.</p>";
+
+    if (ctaScore < 70)
+        suggestionText += "<p>• Add stronger action words in CTA (e.g. Free, Now).</p>";
+
+    if (colorScore < 50)
+        suggestionText += "<p>• Improve color contrast for accessibility.</p>";
+
+    if (overall > 80)
+        suggestionText += "<p>• Great UX! Keep it up.</p>";
+
+    document.getElementById("suggestions").innerHTML = suggestionText;
+}
+</script>
